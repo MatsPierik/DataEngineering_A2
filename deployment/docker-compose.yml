@@ -1,24 +1,24 @@
-volumes:
-  spark-data:
+volumes:   # To share (and persist) data between containers
+  spark-data:   # To store the data
     driver_opts:
       type: none
-      device: /home/${USER_HOME}/data
+      device: /home/${USER_HOME}/data   # Change to your own username of VM
       o: bind
-  notebooks:
+  notebooks: # To install the notebooks
     driver_opts:
       type: none
-      device: /home/${USER_HOME}/notebooks
+      device: /home/${USER_HOME}/notebooks   # Change to your own username of VM
       o: bind
   spark-checkpoint:
-    driver_opts:
+    driver_opts: # To install temporary data
       type: none
-      device: /home/${USER_HOME}/checkpoint
+      device: /home/${USER_HOME}/checkpoint   # Change to your own username of VM
       o: bind
 services:
-  spark-driver-app:
+  spark-driver-app: # Where we run Spark application in jupyter lab
     build:
       context: ./jupyter-all-spark-notebook-gcp    # jupyter/all-spark-notebook with spark configurations for bigquery and gcs
-    container_name: spark-driver-app
+    container_name: spark-driver-app   # Must be same name as 3 lineas above
     user: root
     ports:
       - "8888:8888"
